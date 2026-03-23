@@ -1,28 +1,27 @@
 const std = @import("std");
 const memory = @import("../memory/memory.zig");
-const display = @import("../display//display.zig");
+const display = @import("../display/display.zig");
 const input = @import("../input/input.zig");
 const audio = @import("../Audio/audio.zig");
 const registers: u8 = 16;
 const stack_size: u8 = 16;
 
 pub const CPU = struct {
+    // set up the intepreter
     pub var pc: u16 = 0x200;
-    pub var register: [registers]u8 = [_]u8{0} ** registers;
-    pub var i: u16 = 0;
-    pub var stack: [stack_size]u16 = [_]u16{0} ** stack_size;
-    pub var sp: u8 = 0;
+    pub var register: [registers]u8 = [_]u8{0} ** registers; // create the register file
+    pub var i: u16 = 0; // index register
+    pub var stack: [stack_size]u16 = [_]u16{0} ** stack_size; // create a stack
+    pub var sp: u8 = 0; // stack pointer
     pub var delay_timer: u8 = 0;
     pub var sound_timer: u8 = 0;
-    pub var exit: bool = false;
+    pub var exit: bool = false; // exit flag
     pub var address16f: bool = false;
-    pub var increment_i: bool = true;
 
-    pub fn get_pc() u16 {
-        return CPU.pc;
-    }
+    pub var increment_i: bool = false; // due for different behaviors for different variations of chip8
 
     pub fn fetch() u16 {
+        // get an instruction
         const upper = @as(u16, memory.memory.read(CPU.pc));
         const lower = @as(u16, memory.memory.read(CPU.pc + 1));
         CPU.pc += 2;
@@ -30,33 +29,39 @@ pub const CPU = struct {
     }
 
     pub fn push(value: u16) void {
+        // push onto the stack
         CPU.stack[CPU.sp] = value;
         CPU.sp += 1;
     }
 
     pub fn pop() u16 {
+        // pop the stack
         CPU.sp -= 1;
         return CPU.stack[CPU.sp];
     }
 
+    // save current flags to memory/
     pub fn save_flags(x: u4) void {
         const file = std.fs.cwd().createFile("flags.bin", .{}) catch return;
         defer file.close();
         file.writeAll(CPU.register[0 .. @as(usize, x) + 1]) catch return;
     }
 
+    // load from binary
     pub fn load_flags(x: u4) void {
         const file = std.fs.cwd().openFile("flags.bin", .{}) catch return;
         defer file.close();
         _ = file.readAll(CPU.register[0 .. @as(usize, x) + 1]) catch return;
     }
 
+    // get the size of the next instruction for various different variations of the Chip8 interperter
     fn next_inst_size() u16 {
         const hi = memory.memory.read(CPU.pc);
         const lo = memory.memory.read(CPU.pc + 1);
         return if (hi == 0xF0 and lo == 0x00) 4 else 2;
     }
 
+    // execute commands
     pub fn execute(opcode: u16) void {
         if (CPU.address16f) {
             CPU.i = opcode;
@@ -64,11 +69,13 @@ pub const CPU = struct {
             return;
         }
 
+        // extract hex digits from the op code
         const a: u4 = @as(u4, @truncate(opcode >> 12));
         const b: u4 = @as(u4, @truncate(opcode >> 8));
         const c: u4 = @as(u4, @truncate(opcode >> 4));
         const d: u4 = @as(u4, @truncate(opcode));
 
+        // organize instructions on instr type
         switch (a) {
             0x0 => {
                 switch (c) {
@@ -200,7 +207,7 @@ pub const CPU = struct {
             },
             0xB => {
                 const xnn: u16 = @as(u16, b) << 8 | @as(u16, c) << 4 | @as(u16, d);
-                CPU.pc = xnn + CPU.register[b];
+                CPU.pc = xnn + CPU.register[0];
             },
             0xC => {
                 const nn: u8 = @as(u8, c) << 4 | @as(u8, d);
@@ -239,6 +246,7 @@ pub const CPU = struct {
                             for (0..16) |k| {
                                 if (input.input.last_keys[k] and !input.input.keys[k]) {
                                     CPU.register[b] = @truncate(k);
+                                    input.input.last_keys[k] = false; // consume
                                     found = true;
                                     break;
                                 }
@@ -269,8 +277,8 @@ pub const CPU = struct {
                             }
                             if (CPU.increment_i) CPU.i += @as(u16, b) + 1;
                         },
-                        0x75 => CPU.save_flags(@truncate(b)),
-                        0x85 => CPU.load_flags(@truncate(b)),
+                        0x75 => CPU.save_flags(if (b <= 7) b else 7),
+                        0x85 => CPU.load_flags(if (b <= 7) b else 7),
                         else => std.debug.print("{x}{x}{x}{x} not implemented\n", .{ a, b, c, d }),
                     }
                 }

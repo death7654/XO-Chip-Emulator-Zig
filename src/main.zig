@@ -4,13 +4,16 @@ const cpu = @import("Emulator/CPU/cpu.zig");
 const emulator = @import("Emulator/emulator.zig");
 const input = @import("Emulator/input/input.zig");
 const display = @import("Emulator/display/display.zig");
+const audio = @import("Emulator/audio/audio.zig");
 
 pub fn main() !void {
-    try emulator.emulator.load_rom("ROMS/demos/Sierpinski [Sergey Naydenov, 2010].ch8");
     emulator.emulator.init();
+    try emulator.emulator.load_rom("ROMS/programs/Random Number Test [Matthew Mikolay, 2010].ch8");
     defer display.display.deinit();
+    defer audio.audio.deinit();
 
-    const cycles_per_frame: usize = 700 / 60;
+    const cycles_per_frame: f64 = 700.0 / 60.0;
+    var cycle_acc: f64 = 0.0;
 
     while (!cpu.CPU.exit) {
         var event: sdl.SDL_Event = undefined;
@@ -20,6 +23,7 @@ pub fn main() !void {
                 sdl.SDL_KEYDOWN, sdl.SDL_KEYUP => {
                     const pressed = event.type == sdl.SDL_KEYDOWN;
                     const key: ?u4 = switch (event.key.keysym.sym) {
+                        // map keys
                         sdl.SDLK_KP_0 => 0x0,
                         sdl.SDLK_KP_1 => 0x1,
                         sdl.SDLK_KP_2 => 0x2,
@@ -47,11 +51,14 @@ pub fn main() !void {
             }
         }
 
-        var i: usize = 0;
-        while (i < cycles_per_frame) : (i += 1) {
+        cycle_acc += cycles_per_frame;
+        while (cycle_acc >= 1.0) {
+            // execute routines for every frame
             emulator.emulator.step();
+            cycle_acc -= 1.0;
         }
 
+        // decrease timers
         emulator.emulator.tick_timers();
         display.display.render();
     }

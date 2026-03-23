@@ -1,5 +1,6 @@
 const memory = @import("../memory/memory.zig");
 const cpu = @import("../CPU/cpu.zig");
+const std = @import("std");
 const sdl = @cImport({
     @cInclude("SDL2/SDL.h");
 });
@@ -9,15 +10,22 @@ const total: usize = height * width;
 const scale: c_int = 10;
 
 pub const display = struct {
+    // XO chip has 2 bit planes
     pub var plane1: [total]u1 = [_]u1{0} ** total;
     pub var plane2: [total]u1 = [_]u1{0} ** total;
+
+    // Enable or disable Lowres mode
     pub var lowres: bool = true;
     pub var selected_plane: u2 = 1;
     pub var window: ?*sdl.SDL_Window = null;
     pub var renderer: ?*sdl.SDL_Renderer = null;
 
     pub fn init() void {
-        _ = sdl.SDL_Init(sdl.SDL_INIT_VIDEO);
+        if (sdl.SDL_Init(sdl.SDL_INIT_VIDEO) < 0) {
+            std.debug.print("SDL_Init failed: {s}\n", .{sdl.SDL_GetError()});
+            return;
+        }
+        // create window
         display.window = sdl.SDL_CreateWindow(
             "XO-CHIP",
             sdl.SDL_WINDOWPOS_CENTERED,
@@ -26,9 +34,18 @@ pub const display = struct {
             @as(c_int, @intCast(height)) * scale,
             0,
         );
+        if (display.window == null) {
+            std.debug.print("SDL_CreateWindow failed: {s}\n", .{sdl.SDL_GetError()});
+            return;
+        }
+        // create renderer
         display.renderer = sdl.SDL_CreateRenderer(display.window, -1, sdl.SDL_RENDERER_PRESENTVSYNC);
+        if (display.renderer == null) {
+            std.debug.print("SDL_CreateRenderer failed: {s}\n", .{sdl.SDL_GetError()});
+        }
     }
 
+    // destroy window
     pub fn deinit() void {
         sdl.SDL_DestroyRenderer(display.renderer);
         sdl.SDL_DestroyWindow(display.window);
@@ -36,7 +53,8 @@ pub const display = struct {
     }
 
     pub fn render() void {
-        // background clear
+
+        // set colors
         _ = sdl.SDL_SetRenderDrawColor(display.renderer, 0, 0, 0, 255);
         _ = sdl.SDL_RenderClear(display.renderer);
 
@@ -54,18 +72,16 @@ pub const display = struct {
         while (y < screen_h) : (y += 1) {
             var x: usize = 0;
             while (x < screen_w) : (x += 1) {
-                // sample from physical buffer — in lores each logical pixel is 2x2
                 const idx = if (display.lowres)
                     (y * 2) * width + (x * 2)
                 else
                     y * width + x;
 
-                const bp0: bool = display.plane1[idx] != 0 and (display.selected_plane & 1) != 0;
-                const bp1: bool = display.plane2[idx] != 0 and (display.selected_plane & 2) != 0;
+                const bp0: bool = display.plane1[idx] != 0;
+                const bp1: bool = display.plane2[idx] != 0;
 
                 if (!bp0 and !bp1) continue;
 
-                // match C setColor logic
                 if (bp0 and bp1) {
                     _ = sdl.SDL_SetRenderDrawColor(display.renderer, 100, 100, 100, 255);
                 } else if (bp0) {
@@ -87,7 +103,7 @@ pub const display = struct {
     }
 
     pub fn shift_display_vertical(up: bool, n: u4) void {
-        const rows: usize = if (display.lowres) @as(usize, n) / 2 else @as(usize, n);
+        const rows: usize = if (display.lowres) @as(usize, n) * 2 else @as(usize, n);
         const offset = rows * width;
 
         if (up) {
@@ -117,13 +133,14 @@ pub const display = struct {
     }
 
     pub fn scroll_horizontal(right: bool) void {
-        const cols: usize = if (display.lowres) 2 else 4;
+        const cols: usize = if (display.lowres) 8 else 4;
+
         var row: usize = 0;
         while (row < height) : (row += 1) {
             const row_start = row * width;
             if (right) {
-                var col: usize = width - 1;
-                while (col >= cols) {
+                var col: usize = width - cols;
+                while (col > 0) {
                     col -= 1;
                     if (display.selected_plane & 1 != 0) display.plane1[row_start + col + cols] = display.plane1[row_start + col];
                     if (display.selected_plane & 2 != 0) display.plane2[row_start + col + cols] = display.plane2[row_start + col];

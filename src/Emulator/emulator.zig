@@ -8,6 +8,7 @@ const std = @import("std");
 
 pub const emulator = struct {
     pub fn init() void {
+        // load low res font 64 x 32
         const lores_font = [_]u8{
             0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
             0x20, 0x60, 0x20, 0x20, 0x70, // 1
@@ -27,6 +28,7 @@ pub const emulator = struct {
             0xF0, 0x80, 0xF0, 0x80, 0x80, // F
         };
 
+        // load high res font 128 x 64
         const hires_font = [_]u8{
             0x3C, 0x7E, 0xE7, 0xC3, 0xC3, 0xC3, 0xC3, 0xE7, 0x7E, 0x3C, // 0
             0x18, 0x38, 0x58, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x3C, // 1
@@ -53,23 +55,37 @@ pub const emulator = struct {
         for (hires_font, 0..) |byte, idx| {
             memory.memory.write(@truncate(0x50 + idx), byte);
         }
+
+        // initialize display and audio
         display.display.init();
+        audio.audio.init();
     }
 
     pub fn step() void {
+        // fetch and execute instructions
         const opcode = cpu.CPU.fetch();
         cpu.CPU.execute(opcode);
     }
 
     pub fn tick_timers() void {
+        // decrement timers
         if (cpu.CPU.delay_timer > 0) cpu.CPU.delay_timer -= 1;
         if (cpu.CPU.sound_timer > 0) cpu.CPU.sound_timer -= 1;
+        audio.audio.update(cpu.CPU.sound_timer);
     }
+
     pub fn load_rom(path: []const u8) !void {
+        // open file
         const file = try std.fs.cwd().openFile(path, .{});
         defer file.close();
+
+        // get file stats
         const stat = try file.stat();
         const size = stat.size;
+        const max_size = memory.memory.ram.len - 0x200;
+        if (size > max_size) return error.RomTooLarge;
+
+        // copy to memory
         _ = try file.readAll(memory.memory.ram[0x200 .. 0x200 + size]);
     }
 };
