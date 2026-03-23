@@ -1,3 +1,175 @@
 .zig-cache/
 zig-out/
 *.o
+ROMS/programs/SQRT Test \[Sergey Naydenov, 2010\].ch8
+ROMS/programs/Random Number Test \[Matthew Mikolay, 2010\].txt
+ROMS/programs/Random Number Test \[Matthew Mikolay, 2010\].ch8
+ROMS/programs/Minimal game \[Revival Studios, 2007\].ch8
+ROMS/programs/Life \[GV Samways, 1980\].txt
+ROMS/programs/Life \[GV Samways, 1980\].ch8
+ROMS/programs/Keypad Test \[Hap, 2006\].txt
+ROMS/programs/Keypad Test \[Hap, 2006\].ch8
+ROMS/programs/Jumping X and O \[Harry Kleinberg, 1977\].txt
+ROMS/programs/Jumping X and O \[Harry Kleinberg, 1977\].ch8
+ROMS/programs/IBM Logo.ch8
+ROMS/programs/Framed MK2 \[GV Samways, 1980\].txt
+ROMS/programs/Framed MK2 \[GV Samways, 1980\].ch8
+ROMS/programs/Framed MK1 \[GV Samways, 1980\].txt
+ROMS/programs/Framed MK1 \[GV Samways, 1980\].ch8
+ROMS/programs/Fishie \[Hap, 2005\].txt
+ROMS/programs/Fishie \[Hap, 2005\].ch8
+ROMS/programs/Division Test \[Sergey Naydenov, 2010\].ch8
+ROMS/programs/Delay Timer Test \[Matthew Mikolay, 2010\].txt
+ROMS/programs/Delay Timer Test \[Matthew Mikolay, 2010\].ch8
+ROMS/programs/Clock Program \[Bill Fisher, 1981\].txt
+ROMS/programs/Clock Program \[Bill Fisher, 1981\].ch8
+ROMS/programs/Chip8 Picture.ch8
+ROMS/programs/Chip8 emulator Logo \[Garstyciuks\].ch8
+ROMS/programs/BMP Viewer - Hello (C8 example) \[Hap, 2005\].txt
+ROMS/programs/BMP Viewer - Hello (C8 example) \[Hap, 2005\].ch8
+ROMS/octojam2title.ch8
+ROMS/octoachip8story.ch8
+ROMS/hires/Trip8 Hires Demo (2008) \[Revival Studios\].txt
+ROMS/hires/Trip8 Hires Demo (2008) \[Revival Studios\].ch8
+ROMS/hires/Hires Worm V4 \[RB-Revival Studios, 2007\].txt
+ROMS/hires/Hires Worm V4 \[RB-Revival Studios, 2007\].ch8
+ROMS/hires/Hires Test \[Tom Swan, 1979\].ch8
+ROMS/hires/Hires Stars \[Sergey Naydenov, 2010\].ch8
+ROMS/hires/Hires Sierpinski \[Sergey Naydenov, 2010\].ch8
+ROMS/hires/Hires Particle Demo \[zeroZshadow, 2008\].txt
+ROMS/hires/Hires Particle Demo \[zeroZshadow, 2008\].ch8
+ROMS/hires/Hires Maze \[David Winter, 199x\].txt
+ROMS/hires/Hires Maze \[David Winter, 199x\].ch8
+ROMS/hires/Astro Dodge Hires \[Revival Studios, 2008\].txt
+ROMS/hires/Astro Dodge Hires \[Revival Studios, 2008\].ch8
+ROMS/hires/\!hires_information.txt
+ROMS/games/ZeroPong \[zeroZshadow, 2007\].ch8
+ROMS/games/X-Mirror.ch8
+ROMS/games/Worm V4 \[RB-Revival Studios, 2007\].txt
+ROMS/games/Worm V4 \[RB-Revival Studios, 2007\].ch8
+ROMS/games/Wipe Off \[Joseph Weisbecker\].ch8
+ROMS/games/Wall \[David Winter\].ch8
+ROMS/games/Vertical Brix \[Paul Robson, 1996\].ch8
+ROMS/games/Vers \[JMN, 1991\].ch8
+ROMS/games/UFO \[Lutz V, 1992\].txt
+ROMS/games/UFO \[Lutz V, 1992\].ch8
+ROMS/games/Tron.ch8
+ROMS/games/Timebomb.ch8
+ROMS/games/Tic-Tac-Toe \[David Winter\].ch8
+ROMS/games/Tetris \[Fran Dachille, 1991\].txt
+ROMS/games/Tetris \[Fran Dachille, 1991\].ch8
+ROMS/games/Tapeworm \[JDR, 1999\].ch8
+ROMS/games/Tank.txt
+ROMS/games/Tank.ch8
+ROMS/games/Syzygy \[Roy Trevino, 1990\].txt
+ROMS/games/Syzygy \[Roy Trevino, 1990\].ch8
+ROMS/games/Sum Fun \[Joyce Weisbecker\].txt
+ROMS/games/Sum Fun \[Joyce Weisbecker\].ch8
+ROMS/games/Submarine \[Carmelo Cortez, 1978\].txt
+ROMS/games/Submarine \[Carmelo Cortez, 1978\].ch8
+ROMS/games/Squash \[David Winter\].ch8
+ROMS/games/Spooky Spot \[Joseph Weisbecker, 1978\].txt
+ROMS/games/Spooky Spot \[Joseph Weisbecker, 1978\].ch8
+ROMS/games/Space Invaders \[David Winter\].txt
+ROMS/games/Space Invaders \[David Winter\].ch8
+ROMS/games/Space Invaders \[David Winter\] (alt).txt
+ROMS/games/Space Invaders \[David Winter\] (alt).ch8
+ROMS/games/Space Intercept \[Joseph Weisbecker, 1978\].txt
+ROMS/games/Space Intercept \[Joseph Weisbecker, 1978\].ch8
+ROMS/games/Space Flight.ch8
+ROMS/games/Soccer.ch8
+ROMS/games/Slide \[Joyce Weisbecker\].txt
+ROMS/games/Slide \[Joyce Weisbecker\].ch8
+ROMS/games/Shooting Stars \[Philip Baltzer, 1978\].txt
+ROMS/games/Shooting Stars \[Philip Baltzer, 1978\].ch8
+ROMS/games/Sequence Shoot \[Joyce Weisbecker\].txt
+ROMS/games/Sequence Shoot \[Joyce Weisbecker\].ch8
+ROMS/games/Russian Roulette \[Carmelo Cortez, 1978\].txt
+ROMS/games/Russian Roulette \[Carmelo Cortez, 1978\].ch8
+ROMS/games/Rush Hour \[Hap, 2006\].txt
+ROMS/games/Rush Hour \[Hap, 2006\].ch8
+ROMS/games/Rush Hour \[Hap, 2006\] (alt).ch8
+ROMS/games/Rocket Launcher.ch8
+ROMS/games/Rocket Launch \[Jonas Lindstedt\].ch8
+ROMS/games/Rocket \[Joseph Weisbecker, 1978\].ch8
+ROMS/games/Reversi \[Philip Baltzer\].txt
+ROMS/games/Reversi \[Philip Baltzer\].ch8
+ROMS/games/Puzzle.ch8
+ROMS/games/Programmable Spacefighters \[Jef Winsor\].txt
+ROMS/games/Programmable Spacefighters \[Jef Winsor\].ch8
+ROMS/games/Pong \[Paul Vervalin, 1990\].txt
+ROMS/games/Pong \[Paul Vervalin, 1990\].ch8
+ROMS/games/Pong 2 (Pong hack) \[David Winter, 1997\].ch8
+ROMS/games/Pong (alt).ch8
+ROMS/games/Pong (1 player).ch8
+ROMS/games/Paddles.ch8
+ROMS/games/Nim \[Carmelo Cortez, 1978\].txt
+ROMS/games/Nim \[Carmelo Cortez, 1978\].ch8
+ROMS/games/Most Dangerous Game \[Peter Maruhnic\].txt
+ROMS/games/Most Dangerous Game \[Peter Maruhnic\].ch8
+ROMS/games/Missile \[David Winter\].ch8
+ROMS/games/Merlin \[David Winter\].txt
+ROMS/games/Merlin \[David Winter\].ch8
+ROMS/games/Mastermind FourRow (Robert Lindley, 1978).txt
+ROMS/games/Mastermind FourRow (Robert Lindley, 1978).ch8
+ROMS/games/Lunar Lander \[Udo Pernisz, 1979\].txt
+ROMS/games/Lunar Lander (Udo Pernisz, 1979).ch8
+ROMS/games/Landing.ch8
+ROMS/games/Kaleidoscope \[Joseph Weisbecker, 1978\].txt
+ROMS/games/Kaleidoscope \[Joseph Weisbecker, 1978\].ch8
+ROMS/games/Hidden \[David Winter, 1996\].txt
+ROMS/games/Hidden \[David Winter, 1996\].ch8
+ROMS/games/Hi-Lo \[Jef Winsor, 1978\].txt
+ROMS/games/Hi-Lo \[Jef Winsor, 1978\].ch8
+ROMS/games/Guess \[David Winter\].txt
+ROMS/games/Guess \[David Winter\].ch8
+ROMS/games/Guess \[David Winter\] (alt).txt
+ROMS/games/Guess \[David Winter\] (alt).ch8
+ROMS/games/Filter.ch8
+ROMS/games/Figures.ch8
+ROMS/games/Deflection \[John Fort\].txt
+ROMS/games/Deflection \[John Fort\].ch8
+ROMS/games/Craps \[Camerlo Cortez, 1978\].txt
+ROMS/games/Craps \[Camerlo Cortez, 1978\].ch8
+ROMS/games/Connect 4 \[David Winter\].txt
+ROMS/games/Connect 4 \[David Winter\].ch8
+ROMS/games/Coin Flipping \[Carmelo Cortez, 1978\].txt
+ROMS/games/Coin Flipping \[Carmelo Cortez, 1978\].ch8
+ROMS/games/Cave.ch8
+ROMS/games/Brix \[Andreas Gustafsson, 1990\].ch8
+ROMS/games/Brick (Brix hack, 1990).txt
+ROMS/games/Brick (Brix hack, 1990).ch8
+ROMS/games/Breakout \[Carmelo Cortez, 1979\].txt
+ROMS/games/Breakout \[Carmelo Cortez, 1979\].ch8
+ROMS/games/Breakout (Brix hack) \[David Winter, 1997\].txt
+ROMS/games/Breakout (Brix hack) \[David Winter, 1997\].ch8
+ROMS/games/Bowling \[Gooitzen van der Wal\].txt
+ROMS/games/Bowling \[Gooitzen van der Wal\].ch8
+ROMS/games/Blitz \[David Winter\].txt
+ROMS/games/Blitz \[David Winter\].ch8
+ROMS/games/Blinky \[Hans Christian Egeberg\] (alt).ch8
+ROMS/games/Blinky \[Hans Christian Egeberg, 1991\].ch8
+ROMS/games/Biorhythm \[Jef Winsor\].txt
+ROMS/games/Biorhythm \[Jef Winsor\].ch8
+ROMS/games/Astro Dodge \[Revival Studios, 2008\].txt
+ROMS/games/Astro Dodge \[Revival Studios, 2008\].ch8
+ROMS/games/Animal Race \[Brian Astle\].txt
+ROMS/games/Animal Race \[Brian Astle\].ch8
+ROMS/games/Airplane.ch8
+ROMS/games/Addition Problems \[Paul C. Moews\].ch8
+ROMS/games/15 Puzzle \[Roger Ivie\].txt
+ROMS/games/15 Puzzle \[Roger Ivie\].ch8
+ROMS/games/15 Puzzle \[Roger Ivie\] (alt).ch8
+ROMS/demos/Zero Demo \[zeroZshadow, 2007\].txt
+ROMS/demos/Zero Demo \[zeroZshadow, 2007\].ch8
+ROMS/demos/Trip8 Demo (2008) \[Revival Studios\].txt
+ROMS/demos/Trip8 Demo (2008) \[Revival Studios\].ch8
+ROMS/demos/Stars \[Sergey Naydenov, 2010\].ch8
+ROMS/demos/Sirpinski \[Sergey Naydenov, 2010\].ch8
+ROMS/demos/Sierpinski \[Sergey Naydenov, 2010\].ch8
+ROMS/demos/Particle Demo \[zeroZshadow, 2008\].txt
+ROMS/demos/Particle Demo \[zeroZshadow, 2008\].ch8
+ROMS/demos/Maze \[David Winter, 199x\].txt
+ROMS/demos/Maze \[David Winter, 199x\].ch8
+ROMS/demos/Maze (alt) \[David Winter, 199x\].txt
+ROMS/demos/Maze (alt) \[David Winter, 199x\].ch8

@@ -1,27 +1,58 @@
 const std = @import("std");
-const XO_Chip_Emulator_Zig = @import("XO_Chip_Emulator_Zig");
+const sdl = @cImport(@cInclude("SDL2/SDL.h"));
+const cpu = @import("Emulator/CPU/cpu.zig");
+const emulator = @import("Emulator/emulator.zig");
+const input = @import("Emulator/input/input.zig");
+const display = @import("Emulator/display/display.zig");
 
 pub fn main() !void {
-    // Prints to stderr, ignoring potential errors.
-    std.debug.print("All your {s} are belong to us.\n", .{"codebase"});
-    try XO_Chip_Emulator_Zig.bufferedPrint();
-}
+    try emulator.emulator.load_rom("ROMS/demos/Sierpinski [Sergey Naydenov, 2010].ch8");
+    emulator.emulator.init();
+    defer display.display.deinit();
 
-test "simple test" {
-    const gpa = std.testing.allocator;
-    var list: std.ArrayList(i32) = .empty;
-    defer list.deinit(gpa); // Try commenting this out and see if zig detects the memory leak!
-    try list.append(gpa, 42);
-    try std.testing.expectEqual(@as(i32, 42), list.pop());
-}
+    const cycles_per_frame: usize = 700 / 60;
 
-test "fuzz example" {
-    const Context = struct {
-        fn testOne(context: @This(), input: []const u8) anyerror!void {
-            _ = context;
-            // Try passing `--fuzz` to `zig build test` and see if it manages to fail this test case!
-            try std.testing.expect(!std.mem.eql(u8, "canyoufindme", input));
+    while (!cpu.CPU.exit) {
+        var event: sdl.SDL_Event = undefined;
+        while (sdl.SDL_PollEvent(&event) != 0) {
+            switch (event.type) {
+                sdl.SDL_QUIT => cpu.CPU.exit = true,
+                sdl.SDL_KEYDOWN, sdl.SDL_KEYUP => {
+                    const pressed = event.type == sdl.SDL_KEYDOWN;
+                    const key: ?u4 = switch (event.key.keysym.sym) {
+                        sdl.SDLK_KP_0 => 0x0,
+                        sdl.SDLK_KP_1 => 0x1,
+                        sdl.SDLK_KP_2 => 0x2,
+                        sdl.SDLK_KP_3 => 0x3,
+                        sdl.SDLK_KP_4 => 0x4,
+                        sdl.SDLK_KP_5 => 0x5,
+                        sdl.SDLK_KP_6 => 0x6,
+                        sdl.SDLK_KP_7 => 0x7,
+                        sdl.SDLK_KP_8 => 0x8,
+                        sdl.SDLK_KP_9 => 0x9,
+                        sdl.SDLK_a => 0xA,
+                        sdl.SDLK_b => 0xB,
+                        sdl.SDLK_c => 0xC,
+                        sdl.SDLK_d => 0xD,
+                        sdl.SDLK_e => 0xE,
+                        sdl.SDLK_f => 0xF,
+                        else => null,
+                    };
+                    if (key) |k| {
+                        input.input.last_keys[k] = input.input.keys[k];
+                        input.input.keys[k] = pressed;
+                    }
+                },
+                else => {},
+            }
         }
-    };
-    try std.testing.fuzz(Context{}, Context.testOne, .{});
+
+        var i: usize = 0;
+        while (i < cycles_per_frame) : (i += 1) {
+            emulator.emulator.step();
+        }
+
+        emulator.emulator.tick_timers();
+        display.display.render();
+    }
 }

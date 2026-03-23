@@ -82,6 +82,11 @@ pub fn build(b: *std.Build) void {
             },
         }),
     });
+    const sdl_dep = b.dependency("SDL", .{
+        .optimize = .ReleaseFast,
+        .target = target,
+    });
+    exe.root_module.linkLibrary(sdl_dep.artifact("SDL2"));
 
     // This declares intent for the executable to be installed into the
     // install prefix when running `zig build` (i.e. when executing the default
